@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace QuickSearch
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -19,10 +19,10 @@ namespace QuickSearch
             QuickSort(arr);
 
             var strings = new string[] { "e", "a", "w", "b", "d", "c", "f",  "g", "h", "e" };
-
-            //var strings = new string[] { "e", "g", "w" };
-
             QuickSort(strings);
+
+            var temp = new string[] { "e", "g", "w" };
+            temp.QSort();
         }
 
         #region Quick sort for int
@@ -120,5 +120,15 @@ namespace QuickSearch
         }
 
         #endregion
+
+        #region Extensions
+
+        public static void QSort<T>(this IList<T> arr) where T : IComparable
+        {
+            QuickSort(arr, 0, arr.Count - 1);
+        }
+
+        #endregion
+
     }
 }
