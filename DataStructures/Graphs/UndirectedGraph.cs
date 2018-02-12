@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
-namespace GraphExample
+namespace DataStructures.Graphs
 {
     /// <summary>
     /// Undirected unweighted graph structure
