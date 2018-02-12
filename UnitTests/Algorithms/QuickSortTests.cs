@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Algorithms.Sorting;
 
 namespace UnitTests.Algorithms
 {
@@ -9,10 +10,11 @@ namespace UnitTests.Algorithms
     public class QuickSortTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void QuickSortIsCorrect()
         {
-            //var arr = new int[] { 10, 8, 9, 2, 3, 6, 5, 4, 1, 7, 10 };
-            //QuickSort(arr);
+            //var arr = new int[] { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
+            //QuickSorter.QuickSort(arr);
+            //Assert.IsTrue(arr.Equals(new int[] { 0, 2, 3, 4, 8, 9, 12, 15, 16, 23, 25, 34, 42, 46, 55 }));
             //arr = new int[] { 4, 1, 8, 2, 3, 5 };
             //QuickSort(arr);
             //arr = new int[] { 4, 1 };
