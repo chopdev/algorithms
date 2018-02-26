@@ -12,21 +12,33 @@ namespace UnitTests.Algorithms
         [TestMethod]
         public void QuickSortIsCorrect()
         {
-            //var arr = new int[] { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
-            //QuickSorter.QuickSort(arr);
-            //Assert.IsTrue(arr.Equals(new int[] { 0, 2, 3, 4, 8, 9, 12, 15, 16, 23, 25, 34, 42, 46, 55 }));
-            //arr = new int[] { 4, 1, 8, 2, 3, 5 };
-            //QuickSort(arr);
-            //arr = new int[] { 4, 1 };
-            //QuickSort(arr);
-            //arr = new int[] { 1, 4 };
-            //QuickSort(arr);
+            var arr = new int[] { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
+            QuickSorter.QuickSort(arr);
 
-            //var strings = new string[] { "e", "a", "w", "b", "d", "c", "f", "g", "h", "e" };
-            //QuickSort(strings);
+            var orderedArray = new int[] { 0, 2, 3, 4, 8, 9, 12, 15, 16, 23, 25, 34, 42, 46, 55 };
 
-            //var temp = new string[] { "e", "g", "w" };
-            //temp.QSort();
+            for (int i = 0; i < orderedArray.Length; i++)
+            {
+                Assert.AreEqual(orderedArray[i], arr[i]);
+            }
+
+            arr = new int[] { 4, 1 };
+            arr.QSort();
+            Assert.AreEqual(arr[0], 1);
+            Assert.AreEqual(arr[1], 4);
+        }
+
+        [TestMethod]
+        public void QuickSortIsCorrectIComparable()
+        {
+            var strings = new string[] { "e", "a", "w", "b", "d", "c", "f", "g", "h", "e" };
+            strings.QSort();
+            var ordered = new string[] { "a", "b", "c", "d", "e", "e", "f", "g", "h", "w" };
+
+            for (int i = 0; i < ordered.Length; i++)
+            {
+                Assert.AreEqual(ordered[i], strings[i]);
+            }
         }
     }
 }

@@ -57,6 +57,9 @@ namespace DataStructures.Graphs
             if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
                 throw new ArgumentException("Vertex is not present in graph");
 
+            if(HasEdge(vertex1, vertex2))
+                throw new ArgumentException("Edge is already exists");
+
             _graph[vertex1].AddLast(vertex2);
             _graph[vertex2].AddLast(vertex1);
         }
