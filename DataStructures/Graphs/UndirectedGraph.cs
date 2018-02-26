@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using DataStructures.Graphs.Interfaces;
 
 namespace DataStructures.Graphs
 {
@@ -8,7 +9,7 @@ namespace DataStructures.Graphs
     /// Undirected unweighted graph structure
     /// </summary>
     /// <typeparam name="T">Vertex type</typeparam>
-    public class UndirectedGraph<T> : IEnumerable<T>
+    public class UndirectedGraph<T> : IGraph<T>
     {
         /// <summary>
         /// Contains list of vertexes related to some vertex
@@ -34,7 +35,7 @@ namespace DataStructures.Graphs
         /// </summary>
         /// <param name="vertex">Vertex of a graph</param>
         /// <returns>List of the linked vertexes</returns>
-        public LinkedList<T> this[T vertex]
+        public IEnumerable<T> this[T vertex]
         {
             get
             {
@@ -44,6 +45,11 @@ namespace DataStructures.Graphs
                 return _graph[vertex];
             }
         }
+
+        /// <summary>
+        /// Number of vertices
+        /// </summary>
+        public int Count => _graph.Count;
 
         #region Edge operations
 

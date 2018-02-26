@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataStructures.Graphs;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests.DataStructures
+namespace UnitTests.DataStructures.Graphs
 {
     [TestClass]
     public class UndirectedGraphTests
