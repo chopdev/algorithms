@@ -1,32 +1,59 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DataStructures.Graphs.Interfaces;
 
 namespace DataStructures.Graphs
 {
+    public class WeightedEdge<TVertex>
+    {
+        public WeightedEdge(TVertex vertex) : this(vertex, 0)
+        {
+        }
+
+        public WeightedEdge(TVertex vertex, double weight)
+        {
+            Vertex = vertex;
+            Weight = weight;
+        }
+
+        public TVertex Vertex { get; }
+        public double Weight { get; set; }
+
+        /// <summary>
+        /// Two weighted edges are supposed to be equal if they have the same vertex
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            var edge = obj as WeightedEdge<TVertex>;
+            return edge != null &&
+                   EqualityComparer<TVertex>.Default.Equals(Vertex, edge.Vertex);
+        }
+    }
+
     /// <summary>
-    /// Undirected unweighted graph structure
+    /// Undirected weighted graph structure
     /// </summary>
     /// <typeparam name="T">Vertex type</typeparam>
-    public class UndirectedGraph<T> : IUnweightedGraph<T>
+    public class WeightedUndirectedGraph<T> : IWeightedGraph<T>
     {
         /// <summary>
         /// Contains list of vertexes related to some vertex
         /// </summary>
-        private Dictionary<T, LinkedList<T>> _graph;
+        private Dictionary<T, LinkedList<WeightedEdge<T>>> _graph;
 
         /// <summary>
         /// Creates graph with specified vertexes without edges
         /// </summary>
         /// <param name="vertexes">List of vertexes of a graph</param>
-        public UndirectedGraph(IEnumerable<T> vertexes)
+        public WeightedUndirectedGraph(IEnumerable<T> vertexes)
         {
-            _graph = new Dictionary<T, LinkedList<T>>();
+            _graph = new Dictionary<T, LinkedList<WeightedEdge<T>>>();
 
             foreach (var vertex in vertexes)
             {
-                _graph[vertex] = new LinkedList<T>();
+                _graph[vertex] = new LinkedList<WeightedEdge<T>>();
             }
         }
 
@@ -42,7 +69,7 @@ namespace DataStructures.Graphs
                 if (!_graph.ContainsKey(vertex))
                     throw new ArgumentException("Vertex is not present in graph");
 
-                return _graph[vertex];
+                return _graph[vertex].Select(x => x.Vertex).ToArray();
             }
         }
 
@@ -58,16 +85,16 @@ namespace DataStructures.Graphs
         /// </summary>
         /// <param name="vertex1">First vertext to connect</param>
         /// <param name="vertex2">Second vertext to connect</param>
-        public void AddEdge(T vertex1, T vertex2)
+        public void AddEdge(T vertex1, T vertex2, double weight)
         {
             if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
                 throw new ArgumentException("Vertex is not present in graph");
 
-            if(HasEdge(vertex1, vertex2))
+            if (HasEdge(vertex1, vertex2))
                 throw new ArgumentException("Edge is already exists");
 
-            _graph[vertex1].AddLast(vertex2);
-            _graph[vertex2].AddLast(vertex1);
+            _graph[vertex1].AddLast(new WeightedEdge<T>(vertex2, weight));
+            _graph[vertex2].AddLast(new WeightedEdge<T>(vertex1, weight));
         }
 
         /// <summary>
@@ -80,8 +107,8 @@ namespace DataStructures.Graphs
             if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
                 throw new ArgumentException("Vertex is not present in graph");
 
-            _graph[vertex1].Remove(vertex2);
-            _graph[vertex2].Remove(vertex1);
+            _graph[vertex1].Remove(new WeightedEdge<T>(vertex2));
+            _graph[vertex2].Remove(new WeightedEdge<T>(vertex1));
         }
 
         /// <summary>
@@ -94,7 +121,7 @@ namespace DataStructures.Graphs
             if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
                 throw new ArgumentException("Vertex is not present in graph");
 
-            return _graph[vertex1].Contains(vertex2);
+            return _graph[vertex1].Contains(new WeightedEdge<T>(vertex2));
         }
 
         #endregion
@@ -110,7 +137,7 @@ namespace DataStructures.Graphs
             if (_graph.ContainsKey(vertex))
                 throw new ArgumentException("Vertex is already in the graph");
 
-            _graph[vertex] = new LinkedList<T>();
+            _graph[vertex] = new LinkedList<WeightedEdge<T>>();
         }
 
         /// <summary>
@@ -122,10 +149,10 @@ namespace DataStructures.Graphs
             if (!_graph.ContainsKey(vertex))
                 throw new ArgumentException("Vertex is not present in graph");
 
-            // remove all links
+            // remove all links, because graph is undirected
             while (_graph[vertex].Count > 0)
             {
-                this.RemoveEdge(vertex, _graph[vertex].First.Value);
+                this.RemoveEdge(vertex, _graph[vertex].First.Value.Vertex);
             }
 
             // remove vertex from graph
@@ -170,8 +197,9 @@ namespace DataStructures.Graphs
                     return level;
                 }
 
-                foreach (var item in _graph[vertex])
+                foreach (var edge in _graph[vertex])
                 {
+                    var item = edge.Vertex;
                     if (seenList.ContainsKey(item))
                         continue;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataStructures.Graphs.Interfaces
 {
-    public interface IGraphBase<T> : IEnumerable<T>
+    public interface IGraph<T> : IEnumerable<T> 
     {
         /// <summary>
         /// Enables using of a graph as an array
@@ -15,9 +15,19 @@ namespace DataStructures.Graphs.Interfaces
         /// Number of vertices
         /// </summary>
         int Count { get; }
+        /// <summary>
+        /// Checks whether graph contains the vertex
+        /// </summary>
+        bool HasVertex(T vertex);
+        /// <summary>
+        /// Checks whether there is an edge between vertexes
+        /// </summary>
+        /// <param name="vertex1">First vertext</param>
+        /// <param name="vertex2">Second vertext</param>
+        bool HasEdge(T vertex1, T vertex2);
     }
 
-    public interface IChangebleGraph<T>
+    public interface IUnweightedGraph<T> : IGraph<T>
     {
         /// <summary>
         /// Adds an edge between two vertexes
@@ -32,11 +42,32 @@ namespace DataStructures.Graphs.Interfaces
         /// <param name="vertex2">Second vertext</param>
         void RemoveEdge(T vertex1, T vertex2);
         /// <summary>
-        /// Checks whether there is an edge between vertexes
+        /// Adds new vertex to graph
+        /// </summary>
+        /// <param name="vertex">New vertex</param>
+        void AddVertex(T vertex);
+        /// <summary>
+        /// Remove the vertex from the graph
+        /// </summary>
+        /// <param name="vertex">Vertex to remove</param>
+        void RemoveVertex(T vertex);
+    }
+
+    public interface IWeightedGraph<T> : IGraph<T>
+    {
+        /// <summary>
+        /// Adds an edge between two vertexes
+        /// </summary>
+        /// <param name="vertex1">First vertext to connect</param>
+        /// <param name="vertex2">Second vertext to connect</param>
+        /// <param name="weight">Weight of an edge between vertices</param>
+        void AddEdge(T vertex1, T vertex2, double weight);
+        /// <summary>
+        /// Removes an edge between two vertexes
         /// </summary>
         /// <param name="vertex1">First vertext</param>
         /// <param name="vertex2">Second vertext</param>
-        bool HasEdge(T vertex1, T vertex2);
+        void RemoveEdge(T vertex1, T vertex2);
         /// <summary>
         /// Adds new vertex to graph
         /// </summary>
@@ -48,10 +79,16 @@ namespace DataStructures.Graphs.Interfaces
         /// <param name="vertex">Vertex to remove</param>
         void RemoveVertex(T vertex);
         /// <summary>
-        /// Checks whether graph contains the vertex
+        /// Get weight of an edge between vertices
         /// </summary>
-        bool HasVertex(T vertex);
+        /// <param name="vertex1">First vertext </param>
+        /// <param name="vertex2">Second vertext </param>
+        double GetWeight(T vertex1, T vertex2);
+        /// <summary>
+        /// Change weight of an edge between vertices
+        /// </summary>
+        /// <param name="vertex1">First vertext </param>
+        /// <param name="vertex2">Second vertext </param>
+        double ChangeWeight(T vertex1, T vertex2, double weight);
     }
-
-    public interface IGraph<T> : IGraphBase<T>, IChangebleGraph<T> {}
 }
