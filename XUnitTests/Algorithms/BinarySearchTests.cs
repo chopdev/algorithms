@@ -1,6 +1,6 @@
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Algorithms.Search;
+using Xunit;
 
 namespace UnitTests.Algorithms
 {
@@ -21,37 +21,36 @@ namespace UnitTests.Algorithms
         }
     }
 
-    [TestClass]
     public class BinarySearchTests
     {
-        [TestMethod]
+        [Fact]
         public void IsResultCorrect()
         {
             var array = new int[] { 1, 3, 5, 9, 17, 19 };
 
             var res = BinarySearcher.BinarySearch(array, 1);
-            Assert.IsTrue(res == 0);
+            Assert.True(res == 0);
             res = BinarySearcher.BinarySearch(array, 3);
-            Assert.IsTrue(res == 1);
+            Assert.True(res == 1);
             res = BinarySearcher.BinarySearch(array, 5);
-            Assert.IsTrue(res == 2);
+            Assert.True(res == 2);
             res = BinarySearcher.BinarySearch(array, 9);
-            Assert.IsTrue(res == 3);
+            Assert.True(res == 3);
             res = BinarySearcher.BinarySearch(array, 17);
-            Assert.IsTrue(res == 4);
+            Assert.True(res == 4);
             res = BinarySearcher.BinarySearch(array, 19);
-            Assert.IsTrue(res == 5);
+            Assert.True(res == 5);
             res = BinarySearcher.BinarySearch(array, 2);
-            Assert.IsTrue(res == null);
+            Assert.True(res == null);
             res = BinarySearcher.BinarySearch(array, 20);
-            Assert.IsTrue(res == null);
+            Assert.True(res == null);
             res = BinarySearcher.BinarySearch(array, 4);
-            Assert.IsTrue(res == null);
+            Assert.True(res == null);
             res = BinarySearcher.BinarySearch(array, -1);
-            Assert.IsTrue(res == null);
+            Assert.True(res == null);
         }
 
-        [TestMethod]
+        [Fact]
         public void IsResultForIComparablesCorrect()
         {
             var apples = new Apple[] {
@@ -62,11 +61,11 @@ namespace UnitTests.Algorithms
             };
 
             var apple = BinarySearcher.BinarySearch(apples, new Apple { Color = "Green", Weight = 70.2 });
-            Assert.IsTrue(apple == 1);
+            Assert.True(apple == 1);
             apple = BinarySearcher.BinarySearch(apples, new Apple { Color = "lol", Weight = 90 });
-            Assert.IsTrue(apple == 3);
+            Assert.True(apple == 3);
             apple = BinarySearcher.BinarySearch(apples, new Apple { Color = "Green", Weight = 1000 });
-            Assert.IsTrue(apple == null);
+            Assert.True(apple == null);
         }
     }
 }

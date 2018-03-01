@@ -1,106 +1,99 @@
 ﻿using System;
 using DataStructures.Graphs;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace UnitTests.DataStructures.Graphs
 {
-    [TestClass]
     public class UndirectedGraphTests
     {
         int[] _vertexes;
         UndirectedGraph<int> _graph;
 
-        [TestInitialize]
-        public void InitializeGraph()
+        public UndirectedGraphTests()
         {
             _vertexes = new[] { 1, 2, 3, 4, 0 };
             _graph = new UndirectedGraph<int>(_vertexes);
         }
 
-        [TestMethod]
+        [Fact]
         public void AddVertexCorrect()
         {
-            Assert.IsFalse(_graph.HasVertex(5));
+            Assert.False(_graph.HasVertex(5));
             _graph.AddVertex(5);
-            Assert.IsTrue(_graph.HasVertex(5));
+            Assert.True(_graph.HasVertex(5));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void AddVertexThrowsException()
         {
-            _graph.AddVertex(0);
+            Assert.Throws<ArgumentException>(()=> _graph.AddVertex(0));
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveVertexCorrect()
         {
-            Assert.IsTrue(_graph.HasVertex(4));
+            Assert.True(_graph.HasVertex(4));
             _graph.RemoveVertex(4);
-            Assert.IsFalse(_graph.HasVertex(4));
+            Assert.False(_graph.HasVertex(4));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void RemoveVertexThrowsExceptions()
         {
-            _graph.RemoveVertex(6);
+            Assert.Throws<ArgumentException>(() => _graph.RemoveVertex(6));
         }
 
-        [TestMethod]
+        [Fact]
         public void AddEdgeCorrect()
         {
-            Assert.IsFalse(_graph.HasEdge(1, 0));
-            Assert.IsFalse(_graph.HasEdge(1, 2));
+            Assert.False(_graph.HasEdge(1, 0));
+            Assert.False(_graph.HasEdge(1, 2));
             _graph.AddEdge(0, 1);
             _graph.AddEdge(1, 2);
-            Assert.IsTrue(_graph.HasEdge(1, 0));
-            Assert.IsTrue(_graph.HasEdge(1, 2));
+            Assert.True(_graph.HasEdge(1, 0));
+            Assert.True(_graph.HasEdge(1, 2));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void AddEdgeThrowsException()
         {
-            _graph.AddEdge(0, 65);
+            Assert.Throws<ArgumentException>(() => _graph.AddEdge(0, 65));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void AddEdgeThrowsExceptionOnDuplicate()
         {
             _graph.AddEdge(0, 3);
-            _graph.AddEdge(0, 3);
+            Assert.Throws<ArgumentException>(() => _graph.AddEdge(0, 3));
         }
 
-        [TestMethod]
+        [Fact]
         public void RemoveEdgeCorrect()
         {
             _graph.AddEdge(0, 1);
-            Assert.IsTrue(_graph.HasEdge(1, 0));
+            Assert.True(_graph.HasEdge(1, 0));
             _graph.RemoveEdge(0, 1);
-            Assert.IsFalse(_graph.HasEdge(1, 0));
+            Assert.False(_graph.HasEdge(1, 0));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void RemoveEdgeThrowException()
         {
-            _graph.RemoveEdge(0, 65);
+            Assert.Throws<ArgumentException>(() => _graph.RemoveEdge(0, 65));
         }
 
-        [TestMethod]
+        [Fact]
         public void IteratorWorking()
         {
             int i = 0;
             foreach (var vertex in _graph)
             {
-                Assert.AreEqual(vertex, _vertexes[i]);
+                Assert.Equal(vertex, _vertexes[i]);
                 i++;
             }        
         }
 
-        [TestMethod]
+        [Fact]
         public void BFSWorking()
         {
             _graph.AddEdge(0, 1);
@@ -112,13 +105,13 @@ namespace UnitTests.DataStructures.Graphs
             _graph.AddEdge(3, 4);
 
             var level1 = _graph.BFS(0, 2);
-            Assert.AreEqual(level1, 2);
+            Assert.Equal(level1, 2);
             var level2 = _graph.BFS(0, 4);
-            Assert.AreEqual(level2, 1);
+            Assert.Equal(level2, 1);
             var level3 = _graph.BFS(0, 5);
-            Assert.AreEqual(level3, null);
+            Assert.Equal(level3, null);
             var level4 = _graph.BFS(0, 0);
-            Assert.AreEqual(level4, 0);
+            Assert.Equal(level4, 0);
         }
     }
 }

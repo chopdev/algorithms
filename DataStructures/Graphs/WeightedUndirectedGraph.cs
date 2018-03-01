@@ -168,6 +168,8 @@ namespace DataStructures.Graphs
                 throw new ArgumentException("The edge between vertices doesn't exist");
 
             _graph[vertex1].Find(new WeightedEdge<T>(vertex2)).Value.Weight = weight;
+            _graph[vertex2].Find(new WeightedEdge<T>(vertex1)).Value.Weight = weight;
+
         }
         #endregion
 

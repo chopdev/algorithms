@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataStructures.Graphs;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace UnitTests.DataStructures.Graphs
 {
@@ -19,10 +19,9 @@ namespace UnitTests.DataStructures.Graphs
         }
     }
 
-    [TestClass]
     public class DepthFirstSearchTests
     {
-        [TestMethod]
+        [Fact]
         public void IsDepthFirstSearchRecursiveSequenceCorrect()
         {
             var list = new List<Room>();
@@ -49,14 +48,14 @@ namespace UnitTests.DataStructures.Graphs
             var sequence = DepthFirstSearcher<Room>.DepthFirstSearchRecursive(graph, roomA);
             Console.WriteLine(sequence);
             var expectedSequence = new List<Room>(new Room[] { roomA, roomC, roomD, roomB, roomE, roomF });
-            Assert.AreEqual(expectedSequence.Count, sequence.Count);
+            Assert.Equal(expectedSequence.Count, sequence.Count);
             for (int i = 0; i < expectedSequence.Count; i++)
             {
-                Assert.AreSame(expectedSequence[i], sequence[i]);
+                Assert.Same(expectedSequence[i], sequence[i]);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void IsDepthFirstSearchSequenceCorrect()
         {
             var list = new List<Room>();
@@ -83,14 +82,14 @@ namespace UnitTests.DataStructures.Graphs
             var sequence = DepthFirstSearcher<Room>.DepthFirstSearch(graph, roomA);
             Console.WriteLine(sequence);
             var expectedSequence = new List<Room>(new Room[] { roomA, roomC, roomD, roomF, roomE, roomB });
-            Assert.AreEqual(expectedSequence.Count, sequence.Count);
+            Assert.Equal(expectedSequence.Count, sequence.Count);
             for (int i = 0; i < expectedSequence.Count; i++)
             {
-                Assert.AreSame(expectedSequence[i], sequence[i]);
+                Assert.Same(expectedSequence[i], sequence[i]);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void IsDepthFirstSearchPathCorrect()
         {
             var list = new List<Room>();
@@ -117,14 +116,14 @@ namespace UnitTests.DataStructures.Graphs
             var path = DepthFirstSearcher<Room>.DepthFirstSearchPath(graph, roomA, roomE);
             
             var expectedPath = new List<Room>(new Room[] { roomA, roomC, roomD, roomE });
-            Assert.AreEqual(expectedPath.Count, path.Count);
+            Assert.Equal(expectedPath.Count, path.Count);
             for (int i = 0; i < expectedPath.Count; i++)
             {
-                Assert.AreSame(expectedPath[i], path[i]);
+                Assert.Same(expectedPath[i], path[i]);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void IsDepthFirstRecursiveSearchPathCorrect()
         {
             var list = new List<Room>();
@@ -151,10 +150,10 @@ namespace UnitTests.DataStructures.Graphs
             var path = DepthFirstSearcher<Room>.DepthFirstSearchRecursivePath(graph, roomA, roomE);
 
             var expectedPath = new List<Room>(new Room[] { roomA, roomC, roomD, roomE });
-            Assert.AreEqual(expectedPath.Count, path.Count);
+            Assert.Equal(expectedPath.Count, path.Count);
             for (int i = 0; i < expectedPath.Count; i++)
             {
-                Assert.AreSame(expectedPath[i], path[i]);
+                Assert.Same(expectedPath[i], path[i]);
             }
         }
     }
