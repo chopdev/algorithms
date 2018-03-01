@@ -89,6 +89,6 @@ namespace DataStructures.Graphs.Interfaces
         /// </summary>
         /// <param name="vertex1">First vertext </param>
         /// <param name="vertex2">Second vertext </param>
-        double ChangeWeight(T vertex1, T vertex2, double weight);
+        void ChangeWeight(T vertex1, T vertex2, double weight);
     }
 }

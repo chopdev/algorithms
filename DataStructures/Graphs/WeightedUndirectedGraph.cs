@@ -6,32 +6,6 @@ using DataStructures.Graphs.Interfaces;
 
 namespace DataStructures.Graphs
 {
-    public class WeightedEdge<TVertex>
-    {
-        public WeightedEdge(TVertex vertex) : this(vertex, 0)
-        {
-        }
-
-        public WeightedEdge(TVertex vertex, double weight)
-        {
-            Vertex = vertex;
-            Weight = weight;
-        }
-
-        public TVertex Vertex { get; }
-        public double Weight { get; set; }
-
-        /// <summary>
-        /// Two weighted edges are supposed to be equal if they have the same vertex
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            var edge = obj as WeightedEdge<TVertex>;
-            return edge != null &&
-                   EqualityComparer<TVertex>.Default.Equals(Vertex, edge.Vertex);
-        }
-    }
-
     /// <summary>
     /// Undirected weighted graph structure
     /// </summary>
@@ -169,6 +143,34 @@ namespace DataStructures.Graphs
 
         #endregion
 
+        #region Weighted graph operations
+        /// <summary>
+        /// Get weight between two vertices
+        /// </summary>
+        /// <returns>weight</returns>
+        public double GetWeight(T vertex1, T vertex2)
+        {
+            if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
+                throw new ArgumentException("Vertex is not present in graph");
+
+            if (!HasEdge(vertex1, vertex2))
+                throw new ArgumentException("The edge between vertices doesn't exist");
+
+            return _graph[vertex1].Find(new WeightedEdge<T>(vertex2)).Value.Weight;
+        }
+
+        public void ChangeWeight(T vertex1, T vertex2, double weight)
+        {
+            if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
+                throw new ArgumentException("Vertex is not present in graph");
+
+            if (!HasEdge(vertex1, vertex2))
+                throw new ArgumentException("The edge between vertices doesn't exist");
+
+            _graph[vertex1].Find(new WeightedEdge<T>(vertex2)).Value.Weight = weight;
+        }
+        #endregion
+
         #region Search
 
         /// <summary>
@@ -234,4 +236,32 @@ namespace DataStructures.Graphs
 
         #endregion
     }
+
+
+    public class WeightedEdge<TVertex>
+    {
+        public WeightedEdge(TVertex vertex) : this(vertex, 0)
+        {
+        }
+
+        public WeightedEdge(TVertex vertex, double weight)
+        {
+            Vertex = vertex;
+            Weight = weight;
+        }
+
+        public TVertex Vertex { get; }
+        public double Weight { get; set; }
+
+        /// <summary>
+        /// Two weighted edges are supposed to be equal if they have the same vertex
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            var edge = obj as WeightedEdge<TVertex>;
+            return edge != null &&
+                   EqualityComparer<TVertex>.Default.Equals(Vertex, edge.Vertex);
+        }
+    }
+
 }
