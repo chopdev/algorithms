@@ -173,50 +173,6 @@ namespace DataStructures.Graphs
         }
         #endregion
 
-        #region Search
-
-        /// <summary>
-        /// Breadth-first search. Detects the distance from the node to search node
-        /// </summary>
-        /// <param name="startVertex">Vertex from which BFS will be done</param>
-        /// <param name="searchVertex">Vertex that is searched</param>
-        /// <returns>distance from the starting vertex, null - if searched vertex not found</returns>
-        public int? BFS(T startVertex, T searchVertex)
-        {
-            var seenList = new Dictionary<T, bool>();
-            var vertexQueue = new Queue<T>(); // also linked list can be used
-            var levelQueue = new Queue<int>(); // distance from main node (deepness or level)
-            vertexQueue.Enqueue(startVertex);
-            levelQueue.Enqueue(0);
-
-            while (vertexQueue.Count > 0)
-            {
-                var vertex = vertexQueue.Dequeue();
-                var level = levelQueue.Dequeue();
-
-                seenList[vertex] = true;
-
-                if (vertex.Equals(searchVertex))
-                {
-                    return level;
-                }
-
-                foreach (var edge in _graph[vertex])
-                {
-                    var item = edge.Vertex;
-                    if (seenList.ContainsKey(item))
-                        continue;
-
-                    vertexQueue.Enqueue(item);
-                    levelQueue.Enqueue(level + 1);
-                }
-            }
-
-            return null;
-        }
-
-        #endregion
-
         #region IEnumerable implementation
 
         /// <summary>

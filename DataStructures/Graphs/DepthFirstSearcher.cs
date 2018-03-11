@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using DataStructures.Graphs.Interfaces;
 
@@ -10,58 +9,6 @@ namespace DataStructures.Graphs
     public class DepthFirstSearcher<T> where T: IComparable<T>
     {
         #region Iterative approach
-        /// <summary>
-        /// Depth-first path search. Find first path between startVertex and searchVertex
-        /// </summary>
-        /// <param name="startVertex">Vertex from which DFS will be done</param>
-        /// <param name="searchVertex">Vertex that is searched</param>
-        /// <returns>path from the starting vertex to searched vertex</returns>
-        public static IList<T> DepthFirstSearchPath(IGraph<T> graph, T startVertex, T searchVertex) 
-        {
-            if (!graph.HasVertex(startVertex))
-                throw new ArgumentException("Start vertex is not present in graph");
-
-            if (!graph.HasVertex(searchVertex))
-                throw new ArgumentException("Search vertex is not present in graph");
-
-            var seenList = new Dictionary<T, bool>(graph.Count);
-            
-            var parents = new Dictionary<T, T>(graph.Count);
-            var s = new Stack<T>();
-            s.Push(startVertex);
-            seenList[startVertex] = true;
-            while (s.Count != 0)
-            {
-                var v = s.Pop();
-
-                foreach (var item in graph[v])
-                {
-                    
-                    if (!seenList.ContainsKey(item))
-                    {
-                        parents[item] = v;
-                        s.Push(item);
-                        seenList[item] = true;
-                    }
-                }
-            }
-
-            var path = new List<T>(graph.Count);
-            var currentVertex = searchVertex;
-            path.Add(currentVertex);
-            while (currentVertex.CompareTo(startVertex) != 0)
-            {
-                if (!parents.ContainsKey(currentVertex))
-                {
-                    return path;
-                }
-                currentVertex = parents[currentVertex];
-                path.Add(currentVertex);
-            }
-            path.Reverse();
-            return path;
-        }
-
         /// <summary>
         /// Depth-first search. Return sequence of vertices which DFS was processed
         /// </summary>
@@ -128,6 +75,60 @@ namespace DataStructures.Graphs
                     DepthFirstSearchRecursiveInternal(graph, item, seenList, sequence);
                 }
             }
+        }
+        #endregion
+
+        #region Finding path iterative
+        /// <summary>
+        /// Depth-first path search. Find first path between startVertex and searchVertex
+        /// </summary>
+        /// <param name="startVertex">Vertex from which DFS will be done</param>
+        /// <param name="searchVertex">Vertex that is searched</param>
+        /// <returns>path from the starting vertex to searched vertex</returns>
+        public static IList<T> DepthFirstSearchPath(IGraph<T> graph, T startVertex, T searchVertex)
+        {
+            if (!graph.HasVertex(startVertex))
+                throw new ArgumentException("Start vertex is not present in graph");
+
+            if (!graph.HasVertex(searchVertex))
+                throw new ArgumentException("Search vertex is not present in graph");
+
+            var seenList = new Dictionary<T, bool>(graph.Count);
+
+            var parents = new Dictionary<T, T>(graph.Count);
+            var s = new Stack<T>();
+            s.Push(startVertex);
+            seenList[startVertex] = true;
+            while (s.Count != 0)
+            {
+                var v = s.Pop();
+
+                foreach (var item in graph[v])
+                {
+
+                    if (!seenList.ContainsKey(item))
+                    {
+                        parents[item] = v;
+                        s.Push(item);
+                        seenList[item] = true;
+                    }
+                }
+            }
+
+            var path = new List<T>(graph.Count);
+            var currentVertex = searchVertex;
+            path.Add(currentVertex);
+            while (currentVertex.CompareTo(startVertex) != 0)
+            {
+                if (!parents.ContainsKey(currentVertex))
+                {
+                    return path;
+                }
+                currentVertex = parents[currentVertex];
+                path.Add(currentVertex);
+            }
+            path.Reverse();
+            return path;
         }
         #endregion
 

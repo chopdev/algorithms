@@ -92,26 +92,5 @@ namespace UnitTests.DataStructures.Graphs
                 i++;
             }        
         }
-
-        [Fact]
-        public void BFSWorking()
-        {
-            _graph.AddEdge(0, 1);
-            _graph.AddEdge(0, 4);
-            _graph.AddEdge(1, 2);
-            _graph.AddEdge(1, 3);
-            _graph.AddEdge(1, 4);
-            _graph.AddEdge(2, 3);
-            _graph.AddEdge(3, 4);
-
-            var level1 = _graph.BFS(0, 2);
-            Assert.Equal(level1, 2);
-            var level2 = _graph.BFS(0, 4);
-            Assert.Equal(level2, 1);
-            var level3 = _graph.BFS(0, 5);
-            Assert.Equal(level3, null);
-            var level4 = _graph.BFS(0, 0);
-            Assert.Equal(level4, 0);
-        }
     }
 }
