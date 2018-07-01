@@ -5,7 +5,7 @@ namespace UnitTests.Algorithms
 {
     public class QuickSortTests
     {
-        [Fact]
+        [Fact(DisplayName = "QuickSortIsCorrect")]
         public void QuickSortIsCorrect()
         {
             var arr = new int[] { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
@@ -24,7 +24,7 @@ namespace UnitTests.Algorithms
             Assert.Equal(arr[1], 4);
         }
 
-        [Fact]
+        [Fact(DisplayName = "QuickSortIsCorrectIComparable")]
         public void QuickSortIsCorrectIComparable()
         {
             var strings = new string[] { "e", "a", "w", "b", "d", "c", "f", "g", "h", "e" };
