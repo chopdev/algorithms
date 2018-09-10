@@ -5,6 +5,30 @@ namespace UnitTests.Algorithms
 {
     public class QuickSortTests
     {
+        [Fact(DisplayName = "QuickSortWorksCorrect")]
+        public void QuickSortWorksCorrect()
+        {
+            var arr = new int[] { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
+            QuickSort sorter = new QuickSort();
+            sorter.sort(arr);
+
+            var orderedArray = new int[] { 0, 2, 3, 4, 8, 9, 12, 15, 16, 23, 25, 34, 42, 46, 55 };
+
+            for (int i = 0; i < orderedArray.Length; i++)
+            {
+                Assert.Equal(orderedArray[i], arr[i]);
+            }
+
+            arr = new int[] { 4, 1 };
+            sorter.sort(arr);
+            Assert.Equal(arr[0], 1);
+            Assert.Equal(arr[1], 4);
+
+            arr = new int[] { 1 };
+            sorter.sort(arr);
+            Assert.Equal(arr[0], 1);
+        }
+
         [Fact(DisplayName = "QuickSortIsCorrect")]
         public void QuickSortIsCorrect()
         {

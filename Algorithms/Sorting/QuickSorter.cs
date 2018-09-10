@@ -143,6 +143,8 @@ namespace Algorithms.Sorting
         /// <param name="j">index of second element to swipe</param>
         public static void Swap<T>(IList<T> arr, int i, int j) where T : IComparable
         {
+            if (i == j) return;
+
             var temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
