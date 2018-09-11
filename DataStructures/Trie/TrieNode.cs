@@ -39,7 +39,7 @@ namespace DataStructures.Trie
             if (rest.Length > 0)
                 childNode.addWord(rest);
             else
-                Terminates = true;
+                childNode.Terminates = true;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace DataStructures.Trie
             {
                 char currChar = word[i];
                 currNode = currNode.getChild(currChar);
-                if (currNode == null) return false;;
+                if (currNode == null) return false;
             }
 
             if (!fullWord)
