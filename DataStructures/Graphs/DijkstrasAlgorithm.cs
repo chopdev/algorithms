@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using DataStructures.Graphs.SimplifiedGraphs;
 
 namespace DataStructures.Graphs
@@ -61,6 +59,7 @@ namespace DataStructures.Graphs
             return res;
         }
 
+        // we could use min heap here
         private Node getClosestNode(Dictionary<Node, int> nodeToShortestDist) {
             Node closest = null;
             foreach (var item in nodeToShortestDist)
