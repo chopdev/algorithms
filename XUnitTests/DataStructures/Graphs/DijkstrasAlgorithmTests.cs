@@ -10,6 +10,35 @@ namespace XUnitTests.DataStructures.Graphs
     //https://www.youtube.com/watch?v=pVfj6mxhdMw 
     public class DijkstrasAlgorithmTests
     {
+        public class Lol : IComparable<Lol> {
+            public int val;
+
+            public int CompareTo(Lol other)
+            {
+                return this.val > other.val ? 1 : -1;
+            }
+        }
+        [Fact(DisplayName = "Temp")]
+        public void Temp() {
+            Lol l1 = new Lol() { val = 1 };
+            Lol l2 = new Lol() { val = 2 };
+            Lol l3 = new Lol() { val = -1 };
+            Lol l4 = new Lol() { val = 4 };
+
+            SortedDictionary<Lol, int> ttt = new SortedDictionary<Lol, int>();
+            ttt.Add(l1, 1);
+            ttt.Add(l2, 2);
+            ttt.Add(l3, 3);
+
+           // l3.val = -1; modification do not updates sequence of the dictionary
+            ttt.Add(l4, 4);
+            foreach (var item in ttt)
+            {
+
+            }
+            Assert.True(true);
+        }
+
         [Fact(DisplayName = "Dijkstras ShortestPassCorrect")]
         public void ShortestPassCorrect() {
             Node a = new Node() { name = "A" };
