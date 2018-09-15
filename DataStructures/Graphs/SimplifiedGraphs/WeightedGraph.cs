@@ -14,7 +14,11 @@ namespace DataStructures.Graphs.SimplifiedGraphs
     }
 
     public class Node {
-        public int value { get; set; }
+        public string name { get; set; }
+        /// <summary>
+        /// distance from starting node
+        /// </summary>
+        public int dist { get; set; }
         public List<Edge> edges;
 
         public Node() {
