@@ -13,7 +13,7 @@ namespace DataStructures.Graphs.SimplifiedGraphs
         }
     }
 
-    public class Node {
+    public class Node : IComparable<Node> {
         public string name { get; set; }
         /// <summary>
         /// distance from starting node
@@ -27,6 +27,11 @@ namespace DataStructures.Graphs.SimplifiedGraphs
 
         public Node(IList<Edge> list) {
             edges = new List<Edge>(list);
+        }
+
+        public int CompareTo(Node other)
+        {
+            return this.dist > other.dist ? 1 : -1;
         }
     }
 

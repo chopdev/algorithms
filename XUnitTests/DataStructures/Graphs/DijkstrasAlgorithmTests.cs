@@ -10,43 +10,15 @@ namespace XUnitTests.DataStructures.Graphs
     //https://www.youtube.com/watch?v=pVfj6mxhdMw 
     public class DijkstrasAlgorithmTests
     {
-        public class Lol : IComparable<Lol> {
-            public int val;
+        Node a = new Node() { name = "A" };
+        Node b = new Node() { name = "B" };
+        Node c = new Node() { name = "C" };
+        Node d = new Node() { name = "D" };
+        Node e = new Node() { name = "E" };
+        WeightedGraph graph;
 
-            public int CompareTo(Lol other)
-            {
-                return this.val > other.val ? 1 : -1;
-            }
-        }
-        [Fact(DisplayName = "Temp")]
-        public void Temp() {
-            Lol l1 = new Lol() { val = 1 };
-            Lol l2 = new Lol() { val = 2 };
-            Lol l3 = new Lol() { val = -1 };
-            Lol l4 = new Lol() { val = 4 };
-
-            SortedDictionary<Lol, int> ttt = new SortedDictionary<Lol, int>();
-            ttt.Add(l1, 1);
-            ttt.Add(l2, 2);
-            ttt.Add(l3, 3);
-
-           // l3.val = -1; modification do not updates sequence of the dictionary
-            ttt.Add(l4, 4);
-            foreach (var item in ttt)
-            {
-
-            }
-            Assert.True(true);
-        }
-
-        [Fact(DisplayName = "Dijkstras ShortestPassCorrect")]
-        public void ShortestPassCorrect() {
-            Node a = new Node() { name = "A" };
-            Node b = new Node() { name = "B" };
-            Node c = new Node() { name = "C" };
-            Node d = new Node() { name = "D" };
-            Node e = new Node() { name = "E" };
-
+        public DijkstrasAlgorithmTests() {
+            // init
             Edge e1 = new Edge() { destination = d, weight = 1 };
             Edge e2 = new Edge() { destination = b, weight = 6 };
             a.edges.Add(e1);
@@ -78,10 +50,25 @@ namespace XUnitTests.DataStructures.Graphs
             c.edges.Add(e12);
             c.edges.Add(e13);
 
-            WeightedGraph graph = new WeightedGraph(new Node[] { a,b,c,d,e});
+            graph = new WeightedGraph(new Node[] { a, b, c, d, e });
+        }
+
+        [Fact(DisplayName = "Dijkstras algorithm")]
+        public void ShortestPassCorrect() {           
             DijkstrasAlgorithm dijkstrasAlgorithm = new DijkstrasAlgorithm();
             IList<Node> nodes = dijkstrasAlgorithm.GetShortestPath(graph, a, c);
+            AssertShortestPass(nodes);
+        }
 
+        [Fact(DisplayName = "Dijkstras algorithm using heap")]
+        public void ShortestPassCorrectUsingHeap()
+        {
+            DijkstrasAlgorithmHeap dijkstrasAlgorithm = new DijkstrasAlgorithmHeap();
+            IList<Node> nodes = dijkstrasAlgorithm.GetShortestPath(graph, a, c);
+            AssertShortestPass(nodes);
+        }
+
+        private void AssertShortestPass(IList<Node> nodes) {
             Assert.True(nodes[0] == c);
             Assert.True(nodes[1] == e);
             Assert.True(nodes[2] == d);
