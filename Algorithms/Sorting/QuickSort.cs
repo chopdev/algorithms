@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Algorithms.Sorting
+﻿namespace Algorithms.Sorting
 {
     public class QuickSort
     {
