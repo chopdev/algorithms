@@ -2,10 +2,23 @@
 
 Common algorithms written in C# using .net core 2.0. <br/>
 <br/>
-### List:
+### Algorithms:
 - Quick sort
+- Merge sort
+- Bucket sort
+- Insertion sort
+
 - Binary search
-- Undirected Graph (Adjacency List)
-- Undirected Weighted Graph (Adjacency List)
+
 - Breadth-first search (BFS)
 - Depth-first search (DFS)
+- Dijkstras Algorithm
+
+### Data structures:
+
+- Undirected Graph (Adjacency List)
+- Undirected Weighted Graph (Adjacency List)
+- Hash Table
+- Binary Heap (Min-heap, max-heap)
+- Trie
+

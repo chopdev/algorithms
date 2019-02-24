@@ -47,20 +47,20 @@ namespace Algorithms.Sorting
         public static int Partition(IList<int> arr, int low, int high)
         {
             int pivot = high;
-            int less = low - 1;
+            int less = low;
 
             for (int i = low; i < high; i++)
             {
                 if (arr[pivot] >= arr[i])
                 {
-                    less++;
                     Swap(arr, less, i);
+                    less++;
                 }
             }
 
-            Swap(arr, pivot, less + 1);
+            Swap(arr, pivot, less);
 
-            return less + 1;
+            return less;
         }
 
         /// <summary>
@@ -119,20 +119,20 @@ namespace Algorithms.Sorting
         public static int Partition<T>(IList<T> arr, int low, int high) where T : IComparable
         {
             int pivot = high;
-            int less = low - 1;
+            int less = low;
 
             for (int i = low; i < high; i++)
             {
                 if (arr[pivot].CompareTo(arr[i]) >= 0)
                 {
-                    less++;
                     Swap(arr, less, i);
+                    less++;
                 }
             }
 
-            Swap(arr, pivot, less + 1);
+            Swap(arr, pivot, less);
 
-            return less + 1;
+            return less;
         }
 
         /// <summary>
