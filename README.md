@@ -23,3 +23,6 @@ Common algorithms written in C# using .net core 2.0. <br/>
 - Trie
 - Union Find
 
+TODO
+- Deque
+
