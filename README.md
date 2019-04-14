@@ -21,4 +21,8 @@ Common algorithms written in C# using .net core 2.0. <br/>
 - Hash Table
 - Binary Heap (Min-heap, max-heap)
 - Trie
+- Union Find
+
+TODO
+- Deque
 

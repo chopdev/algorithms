@@ -35,7 +35,7 @@ namespace DataStructures
                 throw new ArgumentException("field is empty");
 
             int colLen = field.Length;
-            int _rowLen = field[0].Length;
+            _rowLen = field[0].Length;
             _parents = new int[_rowLen * colLen];
             _ranks = new int[_rowLen * colLen];
         }
@@ -83,9 +83,9 @@ namespace DataStructures
             return true;
         }
 
-        public int GetId(int row, int col)
+        public int GetId(int rowInd, int colInd)
         {
-            return col * _rowLen + row;
+            return rowInd * _rowLen + colInd;
         }
     }
 }
