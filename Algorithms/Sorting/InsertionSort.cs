@@ -18,8 +18,8 @@ namespace Algorithms.Sorting
         public static void Sort(int[] arr)
         {
             for (int i = 1; i < arr.Length; i++)
-                for (int j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--)
-                    swap(arr, j, j + 1);
+                for (int j = i; j > 0 && arr[j - 1] > arr[j]; j--)
+                    swap(arr, j - 1, j);
         }
 
         private static void swap(int[] arr, int left, int right)
