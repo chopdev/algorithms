@@ -3,10 +3,11 @@
 Common algorithms written in C# using .net core 2.0. <br/>
 <br/>
 ### Algorithms:
+- Insertion sort
 - Quick sort
 - Merge sort
 - Bucket sort
-- Insertion sort
+- Counting sort
 
 - Binary search
 
