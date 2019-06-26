@@ -4,12 +4,12 @@ using Xunit;
 
 namespace XUnitTests.DataStructures.Heap
 {
-    public class PriorityQTests
+    public class MaxPriorityQTests
     {
-        [Fact(DisplayName = "PriorityQ Insert Correct")]
+        [Fact(DisplayName = "MaxPriorityQ Insert Correct")]
         public void PriorityQInsertCorrect()
         {
-            PriorityQ queue = new PriorityQ();
+            MaxPriorityQ queue = new MaxPriorityQ();
             queue.insert(1);
             queue.insert(2);
             queue.insert(3);
@@ -17,7 +17,7 @@ namespace XUnitTests.DataStructures.Heap
             queue.insert(5);
             Assert.True(queue.peek() == 5);
 
-            queue = new PriorityQ();
+            queue = new MaxPriorityQ();
             queue.insert(5);
             queue.insert(4);
             queue.insert(3);
@@ -25,7 +25,7 @@ namespace XUnitTests.DataStructures.Heap
             queue.insert(1);
             Assert.True(queue.peek() == 5);
 
-            queue = new PriorityQ();
+            queue = new MaxPriorityQ();
             queue.insert(3);
             queue.insert(4);
             queue.insert(5);
@@ -34,10 +34,10 @@ namespace XUnitTests.DataStructures.Heap
             Assert.True(queue.peek() == 5);
         }
 
-        [Fact(DisplayName = "PriorityQ Pop Correct")]
+        [Fact(DisplayName = "MaxPriorityQ Pop Correct")]
         public void PriorityQPopCorrect()
         {
-            PriorityQ queue = new PriorityQ();
+            MaxPriorityQ queue = new MaxPriorityQ();
             queue.insert(3);
             queue.insert(4);
             queue.insert(5);
@@ -50,7 +50,7 @@ namespace XUnitTests.DataStructures.Heap
             Assert.True(queue.pop() == 2);
             Assert.True(queue.pop() == 1);
 
-            queue = new PriorityQ();
+            queue = new MaxPriorityQ();
             queue.insert(3);
             queue.insert(4);
             queue.insert(5);
