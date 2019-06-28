@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DataStructures.Graphs.Interfaces;
 
 namespace DataStructures.Graphs
 {
@@ -28,7 +27,7 @@ namespace DataStructures.Graphs
 
                 sequence.Add(v);
                
-                foreach (var item in graph[v])
+                foreach (var item in graph.GetAdjacentVertices(v))
                 {                  
                     if (!seenList.ContainsKey(item))
                     {
@@ -68,7 +67,7 @@ namespace DataStructures.Graphs
             sequence.Add(vertex);
             seenList[vertex] = true;
             
-            foreach (var item in graph[vertex])
+            foreach (var item in graph.GetAdjacentVertices(vertex))
             {
                 if (!seenList.ContainsKey(item))
                 {
@@ -103,7 +102,7 @@ namespace DataStructures.Graphs
             {
                 var v = s.Pop();
 
-                foreach (var item in graph[v])
+                foreach (var item in graph.GetAdjacentVertices(v))
                 {
 
                     if (!seenList.ContainsKey(item))
@@ -154,7 +153,7 @@ namespace DataStructures.Graphs
             if (vertex.CompareTo(searchVertex) == 0) 
                 return true; // path is found
 
-            foreach (var item in graph[vertex])
+            foreach (var item in graph.GetAdjacentVertices(vertex))
             {
                 if (seenList.ContainsKey(item))
                     continue;

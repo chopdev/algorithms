@@ -1,5 +1,6 @@
 ﻿using DataStructures.Graphs;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace UnitTests.DataStructures.Graphs
@@ -15,74 +16,19 @@ namespace UnitTests.DataStructures.Graphs
             _graph = new WeightedUndirectedGraph<int>(_vertexes);
         }
 
-        [Fact]
-        public void AddVertexCorrect()
-        {
-            Assert.False(_graph.HasVertex(5));
-            _graph.AddVertex(5);
-            Assert.True(_graph.HasVertex(5));
-        }
-
-        [Fact]
-        public void AddVertexThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() => _graph.AddVertex(0));
-        }
-
-        [Fact]
-        public void RemoveVertexCorrect()
-        {
-            Assert.True(_graph.HasVertex(4));
-            _graph.RemoveVertex(4);
-            Assert.False(_graph.HasVertex(4));
-        }
-
-        [Fact]
-        public void RemoveVertexThrowsExceptions()
-        {
-            Assert.Throws<ArgumentException>(() => _graph.RemoveVertex(6));
-        }
-
-        [Fact]
+        [Fact(DisplayName = "WeightedUndirectedGraph: AddEdgeCorrect")]
         public void AddEdgeCorrect()
         {
-            Assert.False(_graph.HasEdge(1, 0));
-            Assert.False(_graph.HasEdge(1, 2));
-            _graph.AddEdge(0, 1, 1.4);
-            _graph.AddEdge(1, 2, 1.5);
-            Assert.True(_graph.HasEdge(1, 0));
-            Assert.True(_graph.HasEdge(1, 2));
+            Assert.False(_graph.HasVertex(5));
+            Assert.False(_graph.HasEdge(5, 6));
+            _graph.AddEdge(5, 6, 0.44);
+            Assert.True(_graph.HasVertex(5));
+            Assert.True(_graph.HasVertex(6));
+            Assert.True(_graph.HasEdge(5, 6));
+            Assert.True(_graph.HasEdge(6, 5));
         }
 
-        [Fact]
-        public void AddEdgeThrowsException()
-        {
-            Assert.Throws<ArgumentException>(() => _graph.AddEdge(0, 65, 1.5));
-        }
-
-        [Fact]
-        public void AddEdgeThrowsExceptionOnDuplicate()
-        {
-            _graph.AddEdge(0, 3, 1.5);
-            Assert.Throws<ArgumentException>(() => _graph.AddEdge(0, 3, 1.5));
-        }
-
-        [Fact]
-        public void RemoveEdgeCorrect()
-        {
-            _graph.AddEdge(0, 1, 1.5);
-            Assert.True(_graph.HasEdge(1, 0));
-            _graph.RemoveEdge(0, 1);
-            Assert.False(_graph.HasEdge(1, 0));
-        }
-
-        [Fact]
-        public void RemoveEdgeThrowException()
-        {
-            Assert.Throws<ArgumentException>(() => _graph.RemoveEdge(0, 65));
-        }
-
-        [Fact]
+        [Fact(DisplayName = "WeightedUndirectedGraph: IteratorWorking")]
         public void IteratorWorking()
         {
             int i = 0;
@@ -93,55 +39,27 @@ namespace UnitTests.DataStructures.Graphs
             }
         }
 
-        [Fact]
-        public void WeightedEdgeBehavesCorrect()
+        [Fact(DisplayName = "WeightedUndirectedGraph: GetEdgeCorrect")]
+        public void GetEdgeCorrect()
         {
-            var test1 = new TestClass() { Temp = "test" };
-            var weightedEdge1 = new WeightedEdge<TestClass>(test1);
-            var weightedEdge2 = new WeightedEdge<TestClass>(new TestClass());
-            var weightedEdge3 = new WeightedEdge<TestClass>(test1, 1.5);
+            _graph.AddEdge(5, 6, 0.44);
+            _graph.AddEdge(5, 6, 0.5);
+            _graph.AddEdge(5, 1, 0.3);
+            _graph.AddEdge(5, 2, 0.3);
+            var tempEdge = _graph.AddEdge(0, 4, 0.33);
 
-            Assert.NotEqual(weightedEdge1, weightedEdge2);
-            Assert.Equal(weightedEdge1, weightedEdge3);
+            Assert.Equal(_graph.Count, 7);
+            foreach (var edge in _graph.GetAdjacentEdges(5))
+            {
+                int otherVertice = edge.GetOther(5);
+                Assert.True(otherVertice == 6 || otherVertice == 1 || otherVertice == 2);
+            }
+
+            Assert.True(_graph.GetAdjacentEdges(0).First().GetOther(0) == 4);
+            Assert.True(_graph.GetAdjacentEdges(4).First().GetOther(4) == 0);
+            Assert.True(_graph.GetAdjacentEdges(0).First() == tempEdge);
+            Assert.True(_graph.GetAdjacentEdges(4).First() == tempEdge);
+            Assert.True(tempEdge.Weight == 0.33);
         }
-
-        [Fact]
-        public void GetWeightWorkingRight()
-        {
-            _graph.AddEdge(1, 3, 1.6);
-            _graph.AddEdge(1, 4, 2.8);
-
-            var weight1 = _graph.GetWeight(1, 3);
-            var weight2 = _graph.GetWeight(3, 1);
-            var weight3 = _graph.GetWeight(1, 4);
-            var weight4 = _graph.GetWeight(4, 1);
-            Assert.Equal(weight1, 1.6);
-            Assert.Equal(weight2, 1.6);
-            Assert.Equal(weight3, 2.8);
-            Assert.Equal(weight4, 2.8);
-        }
-
-        [Fact]
-        public void ChangeWeightWorkingRight()
-        {
-            _graph.AddEdge(1, 3, 1.6);
-
-            var weight1 = _graph.GetWeight(1, 3);
-            var weight2 = _graph.GetWeight(3, 1);
-
-            Assert.Equal(weight1, 1.6);
-            Assert.Equal(weight2, 1.6);
-
-            _graph.ChangeWeight(1, 3, 28.9);
-            weight1 = _graph.GetWeight(1, 3);
-            weight2 = _graph.GetWeight(3, 1);
-
-            Assert.Equal(weight1, 28.9);
-            Assert.Equal(weight2, 28.9);
-        }
-    }
-
-    internal class TestClass {
-        public string Temp { get; set; }
     }
 }

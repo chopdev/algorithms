@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DataStructures.Graphs.Interfaces;
 
 namespace DataStructures.Graphs
 {
@@ -35,15 +34,12 @@ namespace DataStructures.Graphs
         /// </summary>
         /// <param name="vertex">Vertex of a graph</param>
         /// <returns>List of the linked vertexes</returns>
-        public IEnumerable<T> this[T vertex]
+        public IEnumerable<T> GetAdjacentVertices(T vertex)
         {
-            get
-            {
-                if (!_graph.ContainsKey(vertex))
-                    throw new ArgumentException("Vertex is not present in graph");
+            if (!_graph.ContainsKey(vertex))
+                throw new ArgumentException("Vertex is not present in graph");
 
-                return _graph[vertex];
-            }
+            return _graph[vertex];
         }
 
         /// <summary>

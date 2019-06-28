@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using DataStructures.Graphs.Interfaces;
 
 namespace DataStructures.Graphs
 {
@@ -15,7 +13,9 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Contains list of vertexes related to some vertex
         /// </summary>
-        private Dictionary<T, LinkedList<WeightedEdge<T>>> _graph;
+        private Dictionary<T, LinkedList<WeightedEdge<T>>> _graph = new Dictionary<T, LinkedList<WeightedEdge<T>>>();
+
+        public WeightedUndirectedGraph() {}
 
         /// <summary>
         /// Creates graph with specified vertexes without edges
@@ -23,27 +23,9 @@ namespace DataStructures.Graphs
         /// <param name="vertexes">List of vertexes of a graph</param>
         public WeightedUndirectedGraph(IEnumerable<T> vertexes)
         {
-            _graph = new Dictionary<T, LinkedList<WeightedEdge<T>>>();
-
             foreach (var vertex in vertexes)
             {
                 _graph[vertex] = new LinkedList<WeightedEdge<T>>();
-            }
-        }
-
-        /// <summary>
-        /// Enables using of a graph as an array
-        /// </summary>
-        /// <param name="vertex">Vertex of a graph</param>
-        /// <returns>List of the linked vertexes</returns>
-        public IEnumerable<T> this[T vertex]
-        {
-            get
-            {
-                if (!_graph.ContainsKey(vertex))
-                    throw new ArgumentException("Vertex is not present in graph");
-
-                return _graph[vertex].Select(x => x.Vertex).ToArray();
             }
         }
 
@@ -59,30 +41,17 @@ namespace DataStructures.Graphs
         /// </summary>
         /// <param name="vertex1">First vertext to connect</param>
         /// <param name="vertex2">Second vertext to connect</param>
-        public void AddEdge(T vertex1, T vertex2, double weight)
+        public WeightedEdge<T> AddEdge(T vertex1, T vertex2, double weight)
         {
-            if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
-                throw new ArgumentException("Vertex is not present in graph");
+            if (!_graph.ContainsKey(vertex1))
+                _graph[vertex1] = new LinkedList<WeightedEdge<T>>();
+            if(!_graph.ContainsKey(vertex2))
+                _graph[vertex2] = new LinkedList<WeightedEdge<T>>();
 
-            if (HasEdge(vertex1, vertex2))
-                throw new ArgumentException("Edge is already exists");
-
-            _graph[vertex1].AddLast(new WeightedEdge<T>(vertex2, weight));
-            _graph[vertex2].AddLast(new WeightedEdge<T>(vertex1, weight));
-        }
-
-        /// <summary>
-        /// Removes an edge between two vertexes
-        /// </summary>
-        /// <param name="vertex1">First vertext</param>
-        /// <param name="vertex2">Second vertext</param>
-        public void RemoveEdge(T vertex1, T vertex2)
-        {
-            if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
-                throw new ArgumentException("Vertex is not present in graph");
-
-            _graph[vertex1].Remove(new WeightedEdge<T>(vertex2));
-            _graph[vertex2].Remove(new WeightedEdge<T>(vertex1));
+            var edge = new WeightedEdge<T>(vertex1, vertex2, weight);
+            _graph[vertex1].AddLast(edge);
+            _graph[vertex2].AddLast(edge);
+            return edge;
         }
 
         /// <summary>
@@ -93,45 +62,20 @@ namespace DataStructures.Graphs
         public bool HasEdge(T vertex1, T vertex2)
         {
             if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
-                throw new ArgumentException("Vertex is not present in graph");
+                return false;
 
-            return _graph[vertex1].Contains(new WeightedEdge<T>(vertex2));
+            foreach (var edge in _graph[vertex1])
+            {
+                if (edge.GetOther(vertex1).Equals(vertex2))
+                    return true;
+            }
+
+            return false;
         }
 
         #endregion
 
         #region Vertex operations
-
-        /// <summary>
-        /// Adds new vertex to graph
-        /// </summary>
-        /// <param name="vertex">New vertex</param>
-        public void AddVertex(T vertex)
-        {
-            if (_graph.ContainsKey(vertex))
-                throw new ArgumentException("Vertex is already in the graph");
-
-            _graph[vertex] = new LinkedList<WeightedEdge<T>>();
-        }
-
-        /// <summary>
-        /// Remove the vertex from the graph
-        /// </summary>
-        /// <param name="vertex">Vertex to remove</param>
-        public void RemoveVertex(T vertex)
-        {
-            if (!_graph.ContainsKey(vertex))
-                throw new ArgumentException("Vertex is not present in graph");
-
-            // remove all links, because graph is undirected
-            while (_graph[vertex].Count > 0)
-            {
-                this.RemoveEdge(vertex, _graph[vertex].First.Value.Vertex);
-            }
-
-            // remove vertex from graph
-            _graph.Remove(vertex);
-        }
 
         /// <summary>
         /// Checks whether graph contains the vertex
@@ -141,36 +85,21 @@ namespace DataStructures.Graphs
             return _graph.ContainsKey(vertex);
         }
 
-        #endregion
-
-        #region Weighted graph operations
-        /// <summary>
-        /// Get weight between two vertices
-        /// </summary>
-        /// <returns>weight</returns>
-        public double GetWeight(T vertex1, T vertex2)
+        public IEnumerable<WeightedEdge<T>> GetAdjacentEdges(T vertex)
         {
-            if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
-                throw new ArgumentException("Vertex is not present in graph");
-
-            if (!HasEdge(vertex1, vertex2))
-                throw new ArgumentException("The edge between vertices doesn't exist");
-
-            return _graph[vertex1].Find(new WeightedEdge<T>(vertex2)).Value.Weight;
+            return _graph[vertex];
         }
 
-        public void ChangeWeight(T vertex1, T vertex2, double weight)
+        public IEnumerable<T> GetAdjacentVertices(T vertex)
         {
-            if (!_graph.ContainsKey(vertex1) || !_graph.ContainsKey(vertex2))
-                throw new ArgumentException("Vertex is not present in graph");
-
-            if (!HasEdge(vertex1, vertex2))
-                throw new ArgumentException("The edge between vertices doesn't exist");
-
-            _graph[vertex1].Find(new WeightedEdge<T>(vertex2)).Value.Weight = weight;
-            _graph[vertex2].Find(new WeightedEdge<T>(vertex1)).Value.Weight = weight;
-
+            var vertices = new HashSet<T>();
+            foreach (var edge in _graph[vertex])
+            {
+                vertices.Add(edge.GetOther(vertex));
+            }
+            return vertices;
         }
+
         #endregion
 
         #region IEnumerable implementation
@@ -198,27 +127,32 @@ namespace DataStructures.Graphs
 
     public class WeightedEdge<TVertex>
     {
-        public WeightedEdge(TVertex vertex) : this(vertex, 0)
+        public WeightedEdge(TVertex vertexA, TVertex vertexB) : this(vertexA, vertexB, 0)
         {
         }
 
-        public WeightedEdge(TVertex vertex, double weight)
+        public WeightedEdge(TVertex vertexA, TVertex vertexB, double weight)
         {
-            Vertex = vertex;
+            VertexA = vertexA;
+            VertexB = vertexB;
             Weight = weight;
         }
 
-        public TVertex Vertex { get; }
+        public TVertex VertexA { get; }
+        public TVertex VertexB { get; }
         public double Weight { get; set; }
 
-        /// <summary>
-        /// Two weighted edges are supposed to be equal if they have the same vertex
-        /// </summary>
-        public override bool Equals(object obj)
+        public TVertex GetEither()
         {
-            var edge = obj as WeightedEdge<TVertex>;
-            return edge != null &&
-                   EqualityComparer<TVertex>.Default.Equals(Vertex, edge.Vertex);
+            return VertexA;
+        }
+
+        public TVertex GetOther(TVertex vertex)
+        {
+            if (vertex == null) throw new ArgumentException("Invalid param vertex");
+            if (vertex.Equals(VertexA)) return VertexB;
+            if (vertex.Equals(VertexB)) return VertexA;
+            throw new ArgumentException("Vertex is not belonging to edge");
         }
     }
 

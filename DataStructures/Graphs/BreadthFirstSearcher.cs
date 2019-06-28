@@ -1,6 +1,4 @@
-﻿using DataStructures.Graphs.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace DataStructures.Graphs
@@ -34,7 +32,7 @@ namespace DataStructures.Graphs
                     return level;
                 }
 
-                foreach (var item in graph[vertex])
+                foreach (var item in graph.GetAdjacentVertices(vertex))
                 {
                     if (seenList.ContainsKey(item))
                         continue;
@@ -73,7 +71,7 @@ namespace DataStructures.Graphs
 
             seenList[currentVertex] = true;
             level++;
-            foreach (var vertex in graph[currentVertex])
+            foreach (var vertex in graph.GetAdjacentVertices(currentVertex))
             {
                 if (seenList.ContainsKey(vertex))
                     continue;
