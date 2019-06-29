@@ -6,7 +6,7 @@ namespace DataStructures.Graphs
 {
     /*
     
-    // https://github.com/chopdev/leetcode_tasks/tree/master/graph/743_network_delay_time
+    
 
      public class DejkstrasAlgorithm {
      class Node {
@@ -32,7 +32,15 @@ namespace DataStructures.Graphs
          }
      }
 
+        // This aproach deletes items from priorityQ on weight update. Other one without removing items could be found here
+      // // https://github.com/chopdev/leetcode_tasks/tree/master/graph/743_network_delay_time
+
      //Time O(ElogE) in the heap implementation, as potentially every edge gets added to the heap
+     // logE - here is add/remove operation to/from priorityQ, but seems that in java remove has O(N) complexity.
+     //   solution is to use your own priority Q implementation (maintain an auxiliary data structure like 
+     //   a HashMap that maintains the mappings from a value in the priority queue to its position
+     //   in the queue. So, at any given time - you would know the index position of any value.)
+     //https://stackoverflow.com/questions/12719066/priority-queue-remove-complexity-time
      // Space O(E+N)
      public void getPath(int[][] edges, int startNode) {
          HashMap<Integer, Node> graph = new HashMap<>();

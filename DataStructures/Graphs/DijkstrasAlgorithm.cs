@@ -3,6 +3,7 @@ using DataStructures.Graphs.SimplifiedGraphs;
 
 namespace DataStructures.Graphs
 {
+    // Basically Dijkstras algorithm sets shortest distance form start node to each node in the tree
     // NOTE: DIJKSTRA's algorithm works correctly only with POSITIVE weights of the edges
     public class DijkstrasAlgorithm
     {

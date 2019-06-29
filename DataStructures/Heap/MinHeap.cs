@@ -25,21 +25,34 @@ namespace DataStructures.Heap
         public void add(T element) {
             arr.Add(element);
             elementToIndex[element] = arr.Count - 1;
-            heapify(arr.Count - 1);
+
+            // bubble up element if it is less than parent
+            int i = arr.Count - 1;
+            int parent = (i - 1) / 2;
+            while (i > 0 && arr[i].CompareTo(arr[parent]) < 0)
+            {
+                swap(i, parent);
+                i = parent;
+                parent = (i - 1) / 2;
+            }
         }
 
         public T pop() {
-            swap(0, arr.Count - 1);
-            T topNode = arr[arr.Count - 1];
-            arr.Remove(topNode);
-            elementToIndex.Remove(topNode);
+            T topNode = remove(0);
+            heapify(0);
             return topNode;
+        }
+
+        public void remove(T element) {
+            int index = getIndex(element);
+            if (index < 0) return;
+            remove(index);
+            heapify(index);
         }
 
         public void heapify(int i)
         {
-            if (i < 0 || i >= arr.Count)
-                throw new ArgumentException("i");
+            if (i < 0) throw new ArgumentException("i");
 
             // drop down element if it is bigger than childs
             int left = 2 * i + 1;
@@ -58,15 +71,6 @@ namespace DataStructures.Heap
                 swap(smallest, i);
                 i = smallest;
             }
-
-            // extension of heapify method
-            // bubble up element if it is less than parent
-            int parent = (i - 1) / 2;
-            while (i > 0 && arr[i].CompareTo(arr[parent]) < 0) {
-                swap(i, parent);
-                i = parent;
-                parent = (i - 1)/ 2;
-            }
         }
 
         public int getIndex(T element)
@@ -75,6 +79,15 @@ namespace DataStructures.Heap
                 return -1;
 
             return elementToIndex[element];
+        }
+
+        private T remove(int index)
+        {
+            swap(index, arr.Count - 1);
+            T nodeToRemove = arr[arr.Count - 1];
+            arr.Remove(nodeToRemove);
+            elementToIndex.Remove(nodeToRemove);
+            return nodeToRemove;
         }
 
         private void swap(int i, int j)

@@ -1,14 +1,14 @@
 ﻿using DataStructures.Graphs.SimplifiedGraphs;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using DataStructures.Heap;
 
 namespace DataStructures.Graphs
 {
-    // Time complexity O(E*log(V) + V) = O(E*logV)
+    // Basically Dijkstras algorithm sets shortest distance form start node to each node in the tree
+    // NOTE: DIJKSTRA's algorithm works correctly only with POSITIVE weights of the edges
     public class DijkstrasAlgorithmHeap
     {
+        // Time complexity O(E*log(V) + V) = O(E*logV)
         public IList<Node> GetShortestPath(WeightedGraph graph, Node fromNode, Node toNode)
         {
             if (graph == null || graph.nodes == null) return null;
@@ -35,18 +35,20 @@ namespace DataStructures.Graphs
                 var currNode = heap.pop();  // get closest to initial node, O(log(V))
 
                 // O(E*log(V)) - for E edges we will do heapify O(logV)
+                // we have E*log(V) here, because we always remove vertex when we update the distane to it
+                // if we would just add each time new dist to heap, we would have O(E*logE) complexity, as in 
+                // heap we will have E items
                 foreach (var edge in currNode.edges)
                 {
                     Node child = edge.destination;
-                    int childHeapInd = heap.getIndex(child);
 
-                    if (childHeapInd < 0) continue; // this vertex is processed already
-
+                    // processed vertexes will have less dist
                     if (child.dist > currNode.dist + edge.weight)
                     {
                         nodeToPrev[child] = currNode;
                         child.dist = currNode.dist + edge.weight; // update weight
-                        heap.heapify(childHeapInd); // change position in heap, bubble element up
+                        heap.remove(child); // change position in heap, bubble element up
+                        heap.add(child);
                     }
                 }
             }
