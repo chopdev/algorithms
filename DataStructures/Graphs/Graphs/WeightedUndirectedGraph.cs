@@ -125,7 +125,7 @@ namespace DataStructures.Graphs
     }
 
 
-    public class WeightedEdge<TVertex>
+    public class WeightedEdge<TVertex> : IComparable<WeightedEdge<TVertex>>
     {
         public WeightedEdge(TVertex vertexA, TVertex vertexB) : this(vertexA, vertexB, 0)
         {
@@ -141,6 +141,11 @@ namespace DataStructures.Graphs
         public TVertex VertexA { get; }
         public TVertex VertexB { get; }
         public double Weight { get; set; }
+
+        public int CompareTo(WeightedEdge<TVertex> obj)
+        {
+            return Weight < obj.Weight ? -1 : Weight == obj.Weight ? 0 : 1;
+        }
 
         public TVertex GetEither()
         {
