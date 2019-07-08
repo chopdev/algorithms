@@ -17,4 +17,13 @@
     <ProjectReference Include="..\DataStructures\DataStructures.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="DataStructures\Graphs\source\mediumEWG.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DataStructures\Graphs\source\tinyEWG.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

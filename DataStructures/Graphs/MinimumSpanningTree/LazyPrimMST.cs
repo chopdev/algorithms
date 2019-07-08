@@ -22,31 +22,34 @@ namespace DataStructures.Graphs.MinimumSpanningTree
         private HashSet<int> _marked;
         private PriorityQ<WeightedEdge<int>> _heap;
 
+        public double Weight { get; private set; }
+
         public LazyPrimMST(IWeightedGraph<int> graph)
         {
             _mstEdges = new Queue<WeightedEdge<int>>(graph.Count - 1);
             _marked = new HashSet<int>(graph.Count);
+            _heap = new PriorityQ<WeightedEdge<int>>();
+
             int currVertex = graph.GetEnumerator().Current; // take first random vertex
             
             // we suppose that graph is connected
-            for (int i = 0; i < graph.Count; i++)
+            for (int i = 0; i < graph.Count - 1; i++)
             {
                 _marked.Add(currVertex);
-                foreach(var edge in graph.GetAdjacentEdges(currVertex)) 
+                foreach (var edge in graph.GetAdjacentEdges(currVertex))
                 {
                     _heap.insert(edge);
                 }
 
                 WeightedEdge<int> shortestEdge = _heap.pop();
-                int other = shortestEdge.GetOther(currVertex);
-                while (_marked.Contains(other))
+                while (_marked.Contains(shortestEdge.VertexA) && _marked.Contains(shortestEdge.VertexB))
                 {
                     shortestEdge = _heap.pop();
-                    other = shortestEdge.GetOther(currVertex);
                 }
 
                 _mstEdges.Enqueue(shortestEdge);
-                currVertex = other;
+                Weight += shortestEdge.Weight;
+                currVertex = _marked.Contains(shortestEdge.VertexA) ? shortestEdge.VertexB : shortestEdge.VertexA;
             }
         }
 
