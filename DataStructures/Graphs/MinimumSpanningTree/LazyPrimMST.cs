@@ -1,7 +1,6 @@
 ﻿using DataStructures.Heap;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DataStructures.Graphs.MinimumSpanningTree
 {
@@ -30,32 +29,42 @@ namespace DataStructures.Graphs.MinimumSpanningTree
             _marked = new HashSet<int>(graph.Count);
             _heap = new PriorityQ<WeightedEdge<int>>();
 
-            int currVertex = graph.GetEnumerator().Current; // take first random vertex
-            
-            // we suppose that graph is connected
-            for (int i = 0; i < graph.Count - 1; i++)
-            {
-                _marked.Add(currVertex);
-                foreach (var edge in graph.GetAdjacentEdges(currVertex))
-                {
-                    _heap.insert(edge);
-                }
-
-                WeightedEdge<int> shortestEdge = _heap.pop();
-                while (_marked.Contains(shortestEdge.VertexA) && _marked.Contains(shortestEdge.VertexB))
-                {
-                    shortestEdge = _heap.pop();
-                }
-
-                _mstEdges.Enqueue(shortestEdge);
-                Weight += shortestEdge.Weight;
-                currVertex = _marked.Contains(shortestEdge.VertexA) ? shortestEdge.VertexB : shortestEdge.VertexA;
-            }
+            // run Prim from all vertices to get a minimum spanning forest
+            foreach (int vertex in graph)
+                if (!_marked.Contains(vertex)) DefineMST(graph, vertex);
         }
 
         public IEnumerable<WeightedEdge<int>> GetMST()
         {
             return _mstEdges;
+        }
+
+        private void DefineMST(IWeightedGraph<int> graph, int currVertex)
+        {
+            Scan(graph, currVertex);
+            // get MST of connected vertices
+            while (!_heap.empty())
+            {
+                WeightedEdge<int> shortestEdge = _heap.pop();
+                if (_marked.Contains(shortestEdge.VertexA) && _marked.Contains(shortestEdge.VertexB))
+                    continue;
+
+                _mstEdges.Enqueue(shortestEdge);
+                Weight += shortestEdge.Weight;
+                if (!_marked.Contains(shortestEdge.VertexA)) Scan(graph, shortestEdge.VertexA);
+                else Scan(graph, shortestEdge.VertexB);
+            }
+        }
+
+        // add edges other vertice of which has not yet been scanned
+        private void Scan(IWeightedGraph<int> graph, int currVertex)
+        {
+            _marked.Add(currVertex);
+            foreach (var edge in graph.GetAdjacentEdges(currVertex))
+            {
+                if(!_marked.Contains(edge.GetOther(currVertex)))
+                    _heap.insert(edge);
+            }
         }
     }
 }
