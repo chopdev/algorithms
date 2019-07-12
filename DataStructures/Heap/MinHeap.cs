@@ -50,6 +50,10 @@ namespace DataStructures.Heap
             heapify(index);
         }
 
+        public bool contains(T element) {
+            return elementToIndex.ContainsKey(element);
+        }
+
         public void heapify(int i)
         {
             if (i < 0) throw new ArgumentException("i");
