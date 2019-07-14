@@ -11,7 +11,7 @@ namespace DataStructures.Graphs
     public class WeightedUndirectedGraph<T> : IWeightedGraph<T>
     {
         /// <summary>
-        /// Contains list of vertexes related to some vertex
+        /// Contains list of vertexes related to some vertex (adjacency list)
         /// </summary>
         private Dictionary<T, LinkedList<WeightedEdge<T>>> _graph = new Dictionary<T, LinkedList<WeightedEdge<T>>>();
 
