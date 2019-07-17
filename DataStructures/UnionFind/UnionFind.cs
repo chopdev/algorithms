@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataStructures.UnionFind
+namespace DataStructures
 {
     // https://algs4.cs.princeton.edu/15uf/WeightedQuickUnionUF.java.html
 

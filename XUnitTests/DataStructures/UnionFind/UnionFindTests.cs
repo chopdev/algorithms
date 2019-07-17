@@ -1,6 +1,5 @@
 ﻿using Xunit;
 using DataStructures;
-using DataStructures.UnionFind;
 
 namespace XUnitTests.DataStructures
 {

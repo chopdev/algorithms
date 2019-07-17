@@ -1,4 +1,6 @@
-﻿using DataStructures.Graphs.MinimumSpanningTree;
+﻿using DataStructures.Graphs;
+using DataStructures.Graphs.MinimumSpanningTree;
+using System.Collections.Generic;
 using Xunit;
 using XUnitTests.DataStructures.Graphs.source;
 
@@ -43,6 +45,42 @@ namespace XUnitTests.DataStructures.Graphs
         {
             var graph = GraphCreator.GetWeightedGraph("mediumEWG.txt");
             var mst = new PrimMST(graph);
+
+            //Assert.True(mst.Weight == 10.46351);
+        }
+
+        [Fact(DisplayName = "KruskalMST: small MST correct")]
+        public void KruskalMSTCorrect()
+        {
+            var graph = GraphCreator.GetWeightedGraph();
+            var mst = new KruskalMST(graph);
+
+            Assert.True(mst.Weight == 1.81);
+        }
+
+        [Fact(DisplayName = "KruskalMST: medium MST correct")]
+        public void KruskalMSTCorrect2()
+        {
+            var graph = GraphCreator.GetWeightedGraph("mediumEWG.txt");
+            var mst = new KruskalMST(graph);
+            var mst2 = new PrimMST(graph);
+            var lazyMST = new LazyPrimMST(graph);
+
+            HashSet<WeightedEdge<int>> set = new HashSet<WeightedEdge<int>>();
+            foreach (var item in mst.GetMST())
+            {
+                set.Add(item);
+            }
+
+            foreach (var item in mst2.GetMST())
+            {
+                set.Add(item);
+            }
+
+            foreach (var item in lazyMST.GetMST())
+            {
+                set.Add(item);
+            }
 
             //Assert.True(mst.Weight == 10.46351);
         }

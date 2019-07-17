@@ -73,6 +73,20 @@ namespace DataStructures.Graphs
             return false;
         }
 
+        public IEnumerable<WeightedEdge<T>> GetEdges()
+        {
+            // interesting implementation here, without use of HashSet: https://algs4.cs.princeton.edu/43mst/EdgeWeightedGraph.java.html
+            HashSet<WeightedEdge<T>> edges = new HashSet<WeightedEdge<T>>();
+            foreach (var vertex in _graph.Keys)
+            {
+                foreach (var edge in _graph[vertex])
+                {
+                    edges.Add(edge);
+                }
+            }
+            return edges;
+        }
+
         #endregion
 
         #region Vertex operations

@@ -65,5 +65,7 @@ namespace DataStructures.Graphs
         /// Get adjacent edges of vertix
         /// </summary>
         IEnumerable<WeightedEdge<T>> GetAdjacentEdges(T vertex);
+
+        IEnumerable<WeightedEdge<T>> GetEdges();
     }
 }
