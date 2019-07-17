@@ -40,8 +40,8 @@ namespace DataStructures.Heap
             // while current element less than parent
             while (currInd > 0 && compare(_arr[currInd], _arr[(currInd - 1) / 2]) < 0)
             {
-                swap(currInd, currInd / 2);
-                currInd = currInd / 2;
+                swap(currInd, (currInd - 1) / 2);
+                currInd = (currInd - 1) / 2;
             }
         }
 
