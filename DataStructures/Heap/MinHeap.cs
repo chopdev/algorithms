@@ -61,12 +61,12 @@ namespace DataStructures.Heap
             // drop down element if it is bigger than childs
             int left = 2 * i + 1;
             int right = 2 * i + 2;
-            int smallest = i;
             for ( ;left<=arr.Count - 1; left = 2*i + 1, right = 2*i + 2)
             {
-                if (arr[left].CompareTo(arr[i]) < 0)
+                int smallest = i;
+                if (arr[left].CompareTo(arr[smallest]) < 0)
                     smallest = left;
-                if(right < arr.Count - 1 && arr[right].CompareTo(arr[i]) < 0)
+                if(right < arr.Count - 1 && arr[right].CompareTo(arr[smallest]) < 0)
                     smallest = right;
 
                 if (smallest == i)
