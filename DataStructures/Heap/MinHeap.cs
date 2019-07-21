@@ -66,7 +66,7 @@ namespace DataStructures.Heap
                 int smallest = i;
                 if (arr[left].CompareTo(arr[smallest]) < 0)
                     smallest = left;
-                if(right < arr.Count - 1 && arr[right].CompareTo(arr[smallest]) < 0)
+                if(right < arr.Count && arr[right].CompareTo(arr[smallest]) < 0)
                     smallest = right;
 
                 if (smallest == i)
