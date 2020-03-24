@@ -21,7 +21,7 @@ Common algorithms written in C# using .net core 2.0. <br/>
 - Undirected Weighted Graph (Adjacency List)
 - Minimum Spanning Tree (Prim, Kruskal)
 - Binary Heap (Min-heap, max-heap)
-- Trie
+- Trie & RadixTree
 - Union Find
 - Hash Table
 
