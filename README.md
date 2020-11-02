@@ -24,6 +24,7 @@ Common algorithms written in C# using .net core 2.0. <br/>
 - Trie & RadixTree
 - Union Find
 - Hash Table
+- LRU Cache
 
 TODO
 - Deque
