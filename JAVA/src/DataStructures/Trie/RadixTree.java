@@ -126,7 +126,7 @@ public final class RadixTree<V> implements Trie<V> {
         return ret;
     }
 
-    private static class Node<V> {
+    public static class Node<V> {
 
         private Node parent;
         private String partialKey;
