@@ -14,6 +14,9 @@ import java.util.Collection;
  * https://stackoverflow.com/questions/9755721/how-can-building-a-heap-be-on-time-complexity
  *
  * Removal/adding to heap - O(logN) as one time siftUp or siftDown operation
+ *
+ * Removal of an item not from the top of the heap O(N)
+ * https://stackoverflow.com/questions/12719066/priority-queue-remove-complexity-time
  * */
 public class Heap<T extends Comparable<T>> {
     private final ArrayList<T> heap = new ArrayList<>();
