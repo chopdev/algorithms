@@ -25,6 +25,9 @@ public class TopologicalSortDFS {
     /**
      * Get graph nodes in order by dependencies. This algorithm supposes that if a -> b, then a is dependend from b.
      * Meaning that b should be processed first.
+     * O(V+E) time complexity
+     * O(V) space complexity
+     *
      *
      * @param graph - node to the list of adjacent/child nodes
      * @return list of ordered nodes
