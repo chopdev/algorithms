@@ -14,6 +14,7 @@ Common algorithms written in C# using .net core 2.0. <br/>
 - Breadth-first search (BFS)
 - Depth-first search (DFS)
 - Dijkstras Algorithm
+- Topological Sort
 
 ### Data structures:
 
